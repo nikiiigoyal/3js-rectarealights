@@ -2,7 +2,7 @@ import * as THREE from 'three/webgpu';
 import Stats from 'three/addons/libs/stats.module.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
-import { RectAreaLightTexturesLib } from 'three/addons/lights/RectAreaLightTexturesLib.js';
+ import { RectAreaLightTexturesLib } from 'three/addons/lights/RectAreaLightTexturesLib.js';
 import { cameraProjectionMatrix } from 'three/tsl';
 
 let canvas = document.getElementById("#threejs")
@@ -10,13 +10,15 @@ let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight,1,1000);
 camera.position.set(0,5,-15)
 
+let renderer
 
+THREE.RectAreaLightNode.setLTC( RectAreaLightTexturesLib.init() );
 
-let renderer = new THREE.WebGPURenderer({antialias: true,
-  canvas})
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth,window.innerHeight)
-renderer.setAnimationLoop(animation);
+				renderer = new THREE.WebGPURenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animation );
+				document.body.appendChild( renderer.domElement );
 console.log("Renderer is using canvas element:", renderer.domElement === canvas);
 
 const geoFloor = new THREE.BoxGeometry(2000,0.1,2000)
@@ -60,6 +62,7 @@ function onWindowResize () {
 
 window.addEventListener('resize',onWindowResize)
 
-function animation() {
+function animation(time) {
+  meshKnot.rotation.y = time / 1000;
   renderer.render(scene,camera)
 }
