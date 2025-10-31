@@ -1,0 +1,65 @@
+import * as THREE from 'three/webgpu';
+import Stats from 'three/addons/libs/stats.module.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
+import { RectAreaLightTexturesLib } from 'three/addons/lights/RectAreaLightTexturesLib.js';
+import { cameraProjectionMatrix } from 'three/tsl';
+
+let canvas = document.getElementById("#threejs")
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight,1,1000);
+camera.position.set(0,5,-15)
+
+
+
+let renderer = new THREE.WebGPURenderer({antialias: true,
+  canvas})
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth,window.innerHeight)
+renderer.setAnimationLoop(animation);
+console.log("Renderer is using canvas element:", renderer.domElement === canvas);
+
+const geoFloor = new THREE.BoxGeometry(2000,0.1,2000)
+const matStdFloor = new THREE.MeshStandardMaterial({color: 0xbcbcbc,roughness: 0.1 ,metalness: 0});
+const meshgeoFloor = new THREE.Mesh(geoFloor,matStdFloor);
+scene.add(meshgeoFloor);
+console.log(meshgeoFloor)
+
+const geoKnot = new THREE.TorusKnotGeometry(1.5,0.5,200,16)
+const matKnot = new THREE.MeshStandardMaterial({color: 0xffffff,roughness:0,metalness:0})
+const meshKnot = new THREE.Mesh(geoKnot,matKnot)
+meshKnot.position.set(0,5,0)
+scene.add(meshKnot)
+console.log("Torus Knot added at:", meshKnot.position);
+
+const rectLight1 = new THREE.RectAreaLight(0xffffff,5,4,10)
+rectLight1.position.set(-5,5,5)
+scene.add(rectLight1)
+
+const rectLight2 = new THREE.RectAreaLight(0xffffff,5,4,10)
+rectLight1.position.set(0,5,5)
+scene.add(rectLight2)
+
+const rectLight3 = new THREE.RectAreaLight(0xffffff,5,4,10)
+rectLight1.position.set(5,5,5)
+scene.add(rectLight3)
+
+scene.add(new RectAreaLightHelper(rectLight1))
+scene.add(new RectAreaLightHelper(rectLight2))
+scene.add(new RectAreaLightHelper(rectLight3))
+
+const controls = new OrbitControls(camera,canvas)
+controls.target.copy(meshKnot.position)
+controls.update();
+
+function onWindowResize () {
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  camera.aspect(window.innerWidth/window.innerHeight);
+  camera.updateProjectionMatrix();
+}
+
+window.addEventListener('resize',onWindowResize)
+
+function animation() {
+  renderer.render(scene,camera)
+}
