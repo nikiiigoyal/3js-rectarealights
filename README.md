@@ -100,7 +100,7 @@ renderer.setAnimationLoop() ensures smooth 60fps animation.
 https://3js-rectarealights.vercel.app/
 🟦🟥🟩 Three rectangular lights illuminating a shiny torus knot, visible through the Orbit camera.
 
-🧑‍💻 Author
-Nikita Goyal
+🧑‍💻 Author :
+Nikita Goyal -
 Frontend & 3D Developer
 
