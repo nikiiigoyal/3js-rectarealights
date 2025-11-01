@@ -101,8 +101,6 @@ https://3js-rectarealights.vercel.app/
 🟦🟥🟩 Three rectangular lights illuminating a shiny torus knot, visible through the Orbit camera.
 
 🧑‍💻 Author
-
-Your Name
+Nikita Goyal
 Frontend & 3D Developer
-💼 LinkedIn
- | 🌐 Portfolio
+
