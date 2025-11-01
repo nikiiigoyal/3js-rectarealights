@@ -1,9 +1,9 @@
 import * as THREE from 'three/webgpu';
-import Stats from 'three/addons/libs/stats.module.js';
+
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
  import { RectAreaLightTexturesLib } from 'three/addons/lights/RectAreaLightTexturesLib.js';
-import { cameraProjectionMatrix } from 'three/tsl';
+
 
 let canvas = document.getElementById("#threejs")
 let scene = new THREE.Scene();
